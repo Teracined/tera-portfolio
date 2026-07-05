@@ -68,14 +68,14 @@ export default function Contact() {
 
         <footer className="contact__footer motion-card">
           <div className="contact__brand">
-            <span className="contact__brand-mark">T</span>
+            <span className="contact__brand-mark">😎</span>
             <span>
-              {profile.penName} · {profile.realName}
+              梁杰华
               <em>{profile.role} / {profile.roleEn}</em>
             </span>
           </div>
           <p className="contact__copy">
-            © {year} {profile.penName}. 用 React + Vite 打造 · 保留所有权利。
+            © {year} 梁杰华. 用 React + Vite 打造 · 保留所有权利。
           </p>
         </footer>
       </div>

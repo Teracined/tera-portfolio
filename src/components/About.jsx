@@ -6,14 +6,14 @@ import './About.css'
 
 const contacts = [
   {
-    iconImage: '/social-icons/bilibili.png',
+    iconImage: '/social-icons/bilibili.webp',
     label: '哔哩哔哩',
     value: 'Bilibili 主页',
     href: 'https://space.bilibili.com/3763724',
     external: true,
   },
   {
-    iconImage: '/social-icons/douyin.png',
+    iconImage: '/social-icons/douyin.webp',
     label: '抖音',
     value: 'Douyin 主页',
     href: 'https://v.douyin.com/Ajyc3yb9yf0/',
@@ -50,7 +50,7 @@ export default function About() {
           <div className="about__photo">
             {/* Replace with a real photo at public/portrait.jpg */}
             <img
-              src="/portrait.png"
+              src="/portrait.jpg"
               alt={`${profile.penName} 头像`}
               onError={(e) => {
                 e.currentTarget.style.display = 'none'
@@ -62,7 +62,6 @@ export default function About() {
           <div className="about__namecard">
             <div className="about__name">
               {profile.realName}
-              <span>aka {profile.penName}</span>
             </div>
             <div className="about__role">
               {profile.role} · {profile.roleEn}

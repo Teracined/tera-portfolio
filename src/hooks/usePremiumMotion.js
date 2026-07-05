@@ -278,7 +278,7 @@ export function usePremiumMotion() {
                 trigger: container,
                 start: 'top bottom',
                 end: 'bottom top',
-                scrub: 1.2,
+                scrub: 0.8,
               },
             }
           )

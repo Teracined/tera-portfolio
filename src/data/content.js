@@ -1,7 +1,7 @@
 // Single source of truth for site content — pulled from 梁杰华's resume.
 
 export const profile = {
-  penName: 'Tera',
+  penName: '梁杰华',
   realName: '梁杰华',
   role: '内容创作者',
   roleEn: 'Content Creator',
@@ -79,7 +79,7 @@ export const projects = [
     desc: '独立构建故事框架与分镜设计，运用 AI 大语言模型润色台词、优化场景结构；作为核心主创统筹现场摄制调度，保障拍摄契合通告单进度。',
     tags: ['编剧', '副导演', 'AI 辅助创作', '现场统筹'],
     accent: 'linear-gradient(135deg,#8b5cf6,#22d3ee)',
-    cover: '/work-film.png',
+    cover: '/work-film.jpg',
     href: 'https://www.xinpianchang.com/a13739804',
     platform: '新片场',
   },
@@ -92,7 +92,7 @@ export const projects = [
     desc: '紧扣"科技赋能匠心，爱使传承不息"主题，主导完成该短片的剧本构思、画面生成与后期制作。深入应用 AI 视频生成技术，突破传统实拍限制，将传统木雕工艺场景与未来机甲元素进行电影级的高质感视觉融合；利用非线性编辑软件进行精细化剪辑与沉浸式音效设计，通过细腻的镜头语言与节奏把控，精准刻画父子情感羁绊与技艺传承，全面展现了前沿 AI 工具在影视工业流中的实战转化能力。',
     tags: ['AIGC', 'AI 视频生成', '微电影', '影视叙事'],
     accent: 'linear-gradient(135deg,#f59e0b,#ef4444)',
-    cover: '/work-carve.png',
+    cover: '/work-carve.jpg',
     href: 'https://www.xinpianchang.com/a13739974',
     platform: '新片场',
   },

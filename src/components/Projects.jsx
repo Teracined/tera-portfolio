@@ -144,6 +144,7 @@ export default function Projects() {
                       <img
                         src={p.cover || `/work-${p.id}.jpg`}
                         alt={p.title}
+                        loading="lazy"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none'
                         }}
