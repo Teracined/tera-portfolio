@@ -7,6 +7,13 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState('hero')
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   const dockItems = useMemo(
     () =>
       nav
@@ -18,13 +25,6 @@ export default function Navbar() {
         })),
     [active]
   )
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   useEffect(() => {
     const io = new IntersectionObserver(

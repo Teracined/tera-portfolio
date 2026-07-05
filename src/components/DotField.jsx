@@ -59,6 +59,16 @@ const DotField = memo(({
     const ctx = canvas.getContext('2d', { alpha: true })
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     let resizeTimer
+    let visible = true
+
+    /* 只在可见时渲染 —— 避免离屏 Canvas 持续消耗 CPU */
+    const io = new IntersectionObserver(
+      (entries) => {
+        visible = entries[0].isIntersecting
+      },
+      { rootMargin: '200px' }
+    )
+    io.observe(canvas)
 
     function resize() {
       clearTimeout(resizeTimer)
@@ -138,6 +148,13 @@ const DotField = memo(({
 
     function tick() {
       frameCount += 1
+
+      /* 不可见时跳过绘制，节省 CPU */
+      if (!visible) {
+        rafRef.current = requestAnimationFrame(tick)
+        return
+      }
+
       const dots = dotsRef.current
       const m = mouseRef.current
       const { w, h } = sizeRef.current
@@ -246,6 +263,7 @@ const DotField = memo(({
       cancelAnimationFrame(rafRef.current)
       clearInterval(speedInterval)
       clearTimeout(resizeTimer)
+      io.disconnect()
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', onMouseMove)
     }

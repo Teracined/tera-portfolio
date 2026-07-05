@@ -22,15 +22,20 @@ export default function GlowCard({
     const isMobile = window.innerWidth <= MOBILE_BREAKPOINT
     if (isMobile) return
 
-    const handleMouseMove = (e) => {
-      const rect = el.getBoundingClientRect()
-      const x = ((e.clientX - rect.left) / rect.width) * 100
-      const y = ((e.clientY - rect.top) / rect.height) * 100
-      el.style.setProperty('--glow-x', `${x}%`)
-      el.style.setProperty('--glow-y', `${y}%`)
-      el.style.setProperty('--glow-intensity', '1')
-      el.style.setProperty('--glow-radius', `${glowRadius}px`)
+    let rafId = null
 
+    const handleMouseMove = (e) => {
+      if (rafId) return
+      rafId = requestAnimationFrame(() => {
+        rafId = null
+        const rect = el.getBoundingClientRect()
+        const x = ((e.clientX - rect.left) / rect.width) * 100
+        const y = ((e.clientY - rect.top) / rect.height) * 100
+        el.style.setProperty('--glow-x', `${x}%`)
+        el.style.setProperty('--glow-y', `${y}%`)
+        el.style.setProperty('--glow-intensity', '1')
+        el.style.setProperty('--glow-radius', `${glowRadius}px`)
+      })
     }
 
     const handleMouseLeave = () => {
