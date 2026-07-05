@@ -197,6 +197,13 @@ a.contact__row:hover,
   background: var(--grad);
   color: #fff;
   font-weight: 800;
+  overflow: hidden;
+}
+.contact__brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 .contact__brand em {
   display: block;

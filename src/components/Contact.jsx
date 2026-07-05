@@ -68,7 +68,9 @@ export default function Contact() {
 
         <footer className="contact__footer motion-card">
           <div className="contact__brand">
-            <span className="contact__brand-mark">😎</span>
+            <span className="contact__brand-mark">
+              <img src="/logo.png" alt="" className="contact__brand-img" />
+            </span>
             <span>
               梁杰华
               <em>{profile.role} / {profile.roleEn}</em>

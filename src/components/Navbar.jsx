@@ -46,7 +46,9 @@ export default function Navbar() {
     <header className={`nav ${scrolled ? 'nav--solid' : ''}`}>
       <div className="nav__inner container">
         <a href="#hero" className="nav__logo">
-          <span className="nav__logo-mark">😎</span>
+          <span className="nav__logo-mark">
+            <img src="/logo.png" alt="" className="nav__logo-img" />
+          </span>
           <span className="nav__logo-text">
             {profile.penName}
             <em>{profile.role}</em>

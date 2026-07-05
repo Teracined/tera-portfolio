@@ -43,6 +43,13 @@
   font-size: 20px;
   background: var(--grad);
   box-shadow: var(--shadow-glow);
+  overflow: hidden;
+}
+.nav__logo-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 .nav__logo-text {
   display: flex;
