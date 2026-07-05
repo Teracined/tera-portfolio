@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { projects } from '../data/content'
 import GlowCard from './GlowCard'
 import Icon from './Icon'
@@ -86,6 +86,24 @@ export default function Projects() {
     }
   }
 
+  // Touch swipe for mobile
+  const swipeRef = useRef({ startX: 0, startY: 0 })
+
+  const handleTouchStart = (e) => {
+    swipeRef.current.startX = e.touches[0].clientX
+    swipeRef.current.startY = e.touches[0].clientY
+  }
+
+  const handleTouchEnd = (e) => {
+    const dx = e.changedTouches[0].clientX - swipeRef.current.startX
+    const dy = e.changedTouches[0].clientY - swipeRef.current.startY
+    // Require 50px minimum horizontal swipe, more horizontal than vertical
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx > 0) goPrev()
+      else goNext()
+    }
+  }
+
   return (
     <section id="projects" className="section projects" data-motion-section>
       <div className="container">
@@ -110,7 +128,10 @@ export default function Projects() {
           tabIndex={0}
           onKeyDown={handleCarouselKeyDown}
         >
-          <div className="projects__stage" data-direction={direction}>
+          <div className="projects__stage" data-direction={direction}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             {projects.map((p, i) => {
               const offset = getRelativeOffset(i, activeIndex, total)
               const position = getSlidePosition(offset)
