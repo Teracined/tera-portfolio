@@ -58,11 +58,30 @@ export default function Contact() {
               <em>城市</em>
               <strong>{profile.location}</strong>
             </div>
-            <div className="contact__row motion-card">
-              <Icon name="spark" size={18} />
-              <em>平台</em>
-              <strong>{profile.platforms.join(' / ')}</strong>
-            </div>
+            <a
+              className="contact__row contact__row--platform motion-card"
+              href="https://space.bilibili.com/3763724"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="contact__row-ico">
+                <img src="/social-icons/bilibili.webp" alt="哔哩哔哩" className="contact__platform-icon" />
+              </span>
+              <strong>Bilibili 主页</strong>
+              <span className="contact__platform-hint">前往主页</span>
+            </a>
+            <a
+              className="contact__row contact__row--platform motion-card"
+              href="https://v.douyin.com/Ajyc3yb9yf0/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="contact__row-ico">
+                <img src="/social-icons/douyin.webp" alt="抖音" className="contact__platform-icon" />
+              </span>
+              <strong>抖音主页</strong>
+              <span className="contact__platform-hint">前往主页</span>
+            </a>
           </div>
         </div>
 

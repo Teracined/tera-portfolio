@@ -372,7 +372,8 @@
   letter-spacing: 0.03em;
   transition: gap 0.25s var(--ease), color 0.25s;
 }
-.projects__slide[data-pos="active"] .project--link:hover .project__view-link {
+.projects__slide[data-pos="active"] .project--link:hover .project__view-link,
+.projects__slide[data-pos="active"] [data-active="true"]:hover .project__view-link {
   gap: 11px;
   color: var(--ink);
 }
@@ -547,6 +548,9 @@
 .project__view-link--play span {
   font-size: 11px;
   transform: translateY(1px);
+}
+.project__view-link--gallery {
+  color: #10b981;
 }
 
 /* === 视频预览弹窗 === */

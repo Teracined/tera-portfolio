@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { projects } from '../data/content'
 import GlowCard from './GlowCard'
 import Icon from './Icon'
+import GalleryModal from './GalleryModal'
 import './Projects.css'
 
 function getRelativeOffset(index, activeIndex, total) {
@@ -26,6 +28,7 @@ export default function Projects() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [direction, setDirection] = useState('next')
   const [preview, setPreview] = useState(null)
+  const [gallery, setGallery] = useState(null)
   const total = projects.length
 
   const goToProject = (index, nextDirection = 'next') => {
@@ -37,11 +40,15 @@ export default function Projects() {
   const goNext = () => goToProject(activeIndex + 1, 'next')
 
   const closePreview = useCallback(() => setPreview(null), [])
+  const closeGallery = useCallback(() => setGallery(null), [])
 
   useEffect(() => {
-    if (!preview) return
+    if (!preview && !gallery) return
     const onKey = (e) => {
-      if (e.key === 'Escape') closePreview()
+      if (e.key === 'Escape') {
+        if (preview) closePreview()
+        if (gallery) closeGallery()
+      }
     }
     document.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
@@ -49,7 +56,7 @@ export default function Projects() {
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
     }
-  }, [preview, closePreview])
+  }, [preview, gallery, closePreview, closeGallery])
 
   const handleSlideClick = (event, index, offset) => {
     if (index === activeIndex) {
@@ -57,6 +64,10 @@ export default function Projects() {
       if (p && p.video) {
         event.preventDefault()
         setPreview(p)
+      } else if (p && p.gallery) {
+        event.preventDefault()
+        event.stopPropagation()
+        setGallery(p)
       } else if (p && p.href) {
         window.open(p.href, '_blank', 'noreferrer')
       }
@@ -209,6 +220,11 @@ export default function Projects() {
                               观看正片 <span aria-hidden="true">▶</span>
                             </span>
                           ) : null}
+                          {p.gallery ? (
+                            <span className="project__view-link project__view-link--gallery">
+                              查看摄影作品 <Icon name="arrow" size={14} />
+                            </span>
+                          ) : null}
                           <GlowCard
                             as="span"
                             className="project__period project__period-card"
@@ -245,7 +261,7 @@ export default function Projects() {
         </div>
       </div>
 
-      {preview ? (
+      {preview ? createPortal(
         <div
           className="project-preview"
           role="dialog"
@@ -275,7 +291,17 @@ export default function Projects() {
               <p className="project-preview__role">{preview.role}</p>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
+      ) : null}
+
+      {gallery ? createPortal(
+        <GalleryModal
+          images={gallery.gallery}
+          title={gallery.title}
+          onClose={closeGallery}
+        />,
+        document.body
       ) : null}
     </section>
   )

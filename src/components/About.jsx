@@ -15,7 +15,7 @@ const contacts = [
   {
     iconImage: '/social-icons/douyin.webp',
     label: '抖音',
-    value: 'Douyin 主页',
+    value: '抖音主页',
     href: 'https://v.douyin.com/Ajyc3yb9yf0/',
     external: true,
   },
