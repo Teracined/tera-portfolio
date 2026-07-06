@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import Dock from './Dock'
+import Weather from './Weather'
 import { nav, profile } from '../data/content'
 import './Navbar.css'
 
@@ -65,6 +66,8 @@ export default function Navbar() {
             dockHeight={116}
           />
         </nav>
+
+        <Weather />
 
         <a href="#contact" className="btn btn-primary nav__cta">
           联系我
