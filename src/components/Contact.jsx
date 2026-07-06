@@ -92,11 +92,11 @@ export default function Contact() {
             </span>
             <span>
               梁杰华
-              <em>{profile.role} / {profile.roleEn}</em>
+              <em>{profile.role}</em>
             </span>
           </div>
           <p className="contact__copy">
-            © {year} 梁杰华. 用 React + Vite 打造 · 保留所有权利。
+            © {year} 由 Teracined 创作，保留所有权利。
           </p>
         </footer>
       </div>

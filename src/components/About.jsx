@@ -31,7 +31,7 @@ export default function About() {
           dotSpacing={13}
           bulgeStrength={32}
           glowRadius={0}
-          sparkle={true}
+          sparkle={false}
           waveAmplitude={1.2}
           cursorRadius={760}
           cursorForce={0.4}

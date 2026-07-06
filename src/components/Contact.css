@@ -4,8 +4,6 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  content-visibility: auto;
-  contain-intrinsic-size: 800px;
   background: #0c1024;
   color: #fff;
 }
@@ -39,6 +37,10 @@
     radial-gradient(34% 34% at 24% 80%, rgba(255, 122, 89, 0.3), transparent 60%);
   animation: meshFloat 30s var(--ease) infinite alternate;
   will-change: transform;
+}
+@keyframes meshFloat {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(2%, 1.5%) scale(1.03); }
 }
 
 .contact__grid-lines {
@@ -121,7 +123,7 @@
   padding: 18px 4px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.82);
-  transition: color 0.3s, border-color 0.3s, padding-left 0.3s var(--ease);
+  transition: color 0.3s, border-color 0.3s, transform 0.3s var(--ease);
 }
 .contact__row--button {
   width: 100%;
@@ -139,7 +141,7 @@ a.contact__row:hover,
 .contact__row--button:hover {
   color: #fff;
   border-color: var(--c3);
-  padding-left: 12px;
+  transform: translateX(8px);
 }
 a.contact__row {
   text-decoration: none;

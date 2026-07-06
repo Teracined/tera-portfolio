@@ -1,8 +1,6 @@
 .about {
   position: relative;
   overflow: hidden;
-  content-visibility: auto;
-  contain-intrinsic-size: 800px;
 }
 
 .about::before {
@@ -19,7 +17,6 @@
   inset: 0;
   z-index: 0;
   opacity: 1;
-  filter: contrast(1.08) saturate(1.08);
   mask-image: radial-gradient(80% 58% at 58% 36%, #000 0%, rgba(0, 0, 0, 0.96) 48%, rgba(0, 0, 0, 0.4) 72%, transparent 100%);
   -webkit-mask-image: radial-gradient(80% 58% at 58% 36%, #000 0%, rgba(0, 0, 0, 0.96) 48%, rgba(0, 0, 0, 0.4) 72%, transparent 100%);
 }

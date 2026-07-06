@@ -162,6 +162,12 @@ const DotField = memo(({
       const len = dots.length
       const t = frameCount * 0.02
 
+      /* 鼠标不动且无波动效果 → 降频到 1fps */
+      if (engagement.current < 0.001 && p.waveAmplitude === 0 && frameCount % 60 !== 0) {
+        rafRef.current = requestAnimationFrame(tick)
+        return
+      }
+
       const targetEngagement = Math.min(m.speed / 5, 1)
       engagement.current += (targetEngagement - engagement.current) * 0.06
       if (engagement.current < 0.001) engagement.current = 0
@@ -306,7 +312,7 @@ const DotField = memo(({
           cy="-9999"
           r={glowRadius}
           fill={`url(#${glowIdRef.current})`}
-          style={{ opacity: 0, willChange: 'opacity' }}
+          style={{ opacity: 0 }}
         />
       </svg>
     </div>

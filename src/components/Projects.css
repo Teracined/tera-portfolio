@@ -92,15 +92,18 @@
   z-index: 2;
   opacity: 0.28;
   transform: translate(calc(-50% - clamp(390px, 39vw, 620px)), calc(-50% + 18px)) scale(0.72);
+  transition: opacity 0.45s var(--ease);
 }
 .projects__slide[data-pos="far-next"] {
   z-index: 2;
   opacity: 0.28;
   transform: translate(calc(-50% + clamp(390px, 39vw, 620px)), calc(-50% + 18px)) scale(0.72);
+  transition: opacity 0.45s var(--ease);
 }
 .projects__slide[data-pos="hidden"] {
   opacity: 0;
   transform: translate(-50%, calc(-50% + 28px)) scale(0.62);
+  transition: none;
 }
 .projects__slide:focus-visible {
   outline: none;
