@@ -5,12 +5,14 @@ import About from './components/About'
 import Projects from './components/Projects'
 import Strengths from './components/Strengths'
 import Contact from './components/Contact'
+import MusicPlayer from './components/MusicPlayer'
 
 export default function App() {
   usePremiumMotion()
   return (
     <>
       <Navbar />
+      <MusicPlayer />
       <main>
         <Hero />
         <About />
