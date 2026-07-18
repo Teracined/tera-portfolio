@@ -36,7 +36,6 @@
     radial-gradient(40% 40% at 70% 82%, rgba(34, 211, 238, 0.4), transparent 60%),
     radial-gradient(34% 34% at 24% 80%, rgba(255, 122, 89, 0.3), transparent 60%);
   animation: meshFloat 30s var(--ease) infinite alternate;
-  will-change: transform;
 }
 @keyframes meshFloat {
   from { transform: translate(0, 0) scale(1); }

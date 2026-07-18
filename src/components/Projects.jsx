@@ -1,12 +1,13 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { createPortal } from 'react-dom'
-import { projects } from '../data/content'
+import { projects, categories } from '../data/content'
 import GlowCard from './GlowCard'
 import Icon from './Icon'
 import GalleryModal from './GalleryModal'
 import './Projects.css'
 
 function getRelativeOffset(index, activeIndex, total) {
+  if (total === 0) return 0
   let offset = index - activeIndex
 
   if (offset > total / 2) offset -= total
@@ -25,13 +26,27 @@ function getSlidePosition(offset) {
 }
 
 export default function Projects() {
+  const [activeCategory, setActiveCategory] = useState(categories[0])
   const [activeIndex, setActiveIndex] = useState(0)
   const [direction, setDirection] = useState('next')
   const [preview, setPreview] = useState(null)
   const [gallery, setGallery] = useState(null)
-  const total = projects.length
+
+  const filteredProjects = useMemo(
+    () => projects.filter((p) => p.category === activeCategory),
+    [activeCategory]
+  )
+  const total = filteredProjects.length
+
+  const switchCategory = (cat) => {
+    if (cat === activeCategory) return
+    setActiveCategory(cat)
+    setActiveIndex(0)
+    setDirection('next')
+  }
 
   const goToProject = (index, nextDirection = 'next') => {
+    if (total === 0) return
     setDirection(nextDirection)
     setActiveIndex((index + total) % total)
   }
@@ -60,7 +75,7 @@ export default function Projects() {
 
   const handleSlideClick = (event, index, offset) => {
     if (index === activeIndex) {
-      const p = projects[index]
+      const p = filteredProjects[index]
       if (p && p.video) {
         event.preventDefault()
         setPreview(p)
@@ -131,132 +146,156 @@ export default function Projects() {
           </p>
         </header>
 
-        <div
-          className="projects__carousel"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="精选作品轮播"
-          tabIndex={0}
-          onKeyDown={handleCarouselKeyDown}
-        >
-          <div className="projects__stage" data-direction={direction}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
-            {projects.map((p, i) => {
-              const offset = getRelativeOffset(i, activeIndex, total)
-              const position = getSlidePosition(offset)
-              const isActive = position === 'active'
-              const isSide = position === 'prev' || position === 'next'
-              const isHidden = position === 'far-prev' || position === 'far-next' || position === 'hidden'
-              const slideLabel = isActive ? '当前作品' : '切换到作品'
-              const CardTag = 'article'
-
-              return (
-                <div
-                  key={p.id}
-                  className="projects__slide"
-                  data-pos={position}
-                  data-active={isActive ? 'true' : 'false'}
-                  role={isSide ? 'button' : undefined}
-                  tabIndex={isSide ? 0 : undefined}
-                  aria-label={isHidden ? undefined : `${slideLabel}：${p.title}`}
-                  aria-hidden={isHidden ? 'true' : undefined}
-                  onClick={(event) => handleSlideClick(event, i, offset)}
-                  onKeyDown={(event) => handleSlideKeyDown(event, i, offset)}
-                >
-                  <GlowCard
-                    as={CardTag}
-                    className={`project motion-card ${isActive && p.href ? 'project--link' : ''}`}
-                    style={{ '--delay': `${i * 70}ms` }}
-                    glowColor="140, 192, 221"
-                    glowRadius={220}
-                  >
-                    <div className="project__media motion-media motion-parallax" style={{ background: p.accent }}>
-                      <img
-                        src={p.cover || `/work-${p.id}.jpg`}
-                        alt={p.title}
-                        loading="lazy"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none'
-                        }}
-                      />
-                      <span className="project__metric">{p.metric}</span>
-                      {p.href ? <span className="project__platform-badge" data-platform={p.platform || 'bilibili'}>{p.platform || 'Bilibili'}</span> : null}
-                      {p.video ? (
-                        <span className="project__platform-badge project__platform-badge--play">
-                          <span className="project__play-icon" aria-hidden="true">▶</span> 微电影
-                        </span>
-                      ) : null}
-                      <span className="project__index">0{i + 1}</span>
-                    </div>
-
-                    <div className="project__body">
-                      <div className="project__role">{p.role}</div>
-                      <h3 className="project__title">{p.title}</h3>
-                      <p className="project__desc">{p.desc}</p>
-                      <div className="project__foot">
-                        <div className="project__tags">
-                          {p.tags.map((t) => (
-                            <GlowCard
-                              key={t}
-                              as="span"
-                              className="project__tag"
-                              glowColor="140, 192, 221"
-                              glowRadius={120}
-                            >
-                              {t}
-                            </GlowCard>
-                          ))}
-                        </div>
-                        <div className="project__meta-group">
-                          {p.href ? (
-                            <span className="project__view-link">
-                              前往观看 <Icon name="arrow" size={14} />
-                            </span>
-                          ) : null}
-                          {p.video ? (
-                            <span className="project__view-link project__view-link--play">
-                              观看正片 <span aria-hidden="true">▶</span>
-                            </span>
-                          ) : null}
-                          {p.gallery ? (
-                            <span className="project__view-link project__view-link--gallery">
-                              查看摄影作品 <Icon name="arrow" size={14} />
-                            </span>
-                          ) : null}
-                          <GlowCard
-                            as="span"
-                            className="project__period project__period-card"
-                            glowColor="140, 192, 221"
-                            glowRadius={120}
-                          >
-                            {p.period}
-                          </GlowCard>
-                        </div>
-                      </div>
-                    </div>
-
-                    <span className="project__cta" aria-hidden="true">
-                      <Icon name="arrow" size={18} />
-                    </span>
-                  </GlowCard>
-                </div>
-              )
-            })}
-          </div>
-
-          <div className="projects__dots" aria-label="选择作品">
-            {projects.map((p, i) => (
+        <div className="projects__layout">
+          {/* 竖列分类选项卡 */}
+          <nav className="projects__tabs" aria-label="作品分类">
+            {categories.map((cat) => (
               <button
-                key={p.id}
+                key={cat}
                 type="button"
-                className={`projects__dot ${i === activeIndex ? 'is-active' : ''}`}
-                aria-label={`切换到作品：${p.title}`}
-                aria-current={i === activeIndex ? 'true' : undefined}
-                onClick={() => goToProject(i, i < activeIndex ? 'prev' : 'next')}
-              />
+                className={`projects__tab ${cat === activeCategory ? 'is-active' : ''}`}
+                onClick={() => switchCategory(cat)}
+                aria-pressed={cat === activeCategory}
+              >
+                <span className="projects__tab-text">{cat}</span>
+                <span className="projects__tab-indicator" aria-hidden="true" />
+              </button>
             ))}
+          </nav>
+
+          <div
+            className="projects__carousel"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="精选作品轮播"
+            tabIndex={0}
+            onKeyDown={handleCarouselKeyDown}
+          >
+            <div className="projects__stage" data-direction={direction}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
+              {filteredProjects.length === 0 ? (
+                <div className="projects__empty">该分类暂无作品</div>
+              ) : (
+                filteredProjects.map((p, i) => {
+                  const offset = getRelativeOffset(i, activeIndex, total)
+                  const position = getSlidePosition(offset)
+                  const isActive = position === 'active'
+                  const isSide = position === 'prev' || position === 'next'
+                  const isHidden = position === 'far-prev' || position === 'far-next' || position === 'hidden'
+                  const slideLabel = isActive ? '当前作品' : '切换到作品'
+                  const CardTag = 'article'
+
+                  return (
+                    <div
+                      key={p.id}
+                      className="projects__slide"
+                      data-pos={position}
+                      data-active={isActive ? 'true' : 'false'}
+                      role={isSide ? 'button' : undefined}
+                      tabIndex={isSide ? 0 : undefined}
+                      aria-label={isHidden ? undefined : `${slideLabel}：${p.title}`}
+                      aria-hidden={isHidden ? 'true' : undefined}
+                      onClick={(event) => handleSlideClick(event, i, offset)}
+                      onKeyDown={(event) => handleSlideKeyDown(event, i, offset)}
+                    >
+                      <GlowCard
+                        as={CardTag}
+                        className={`project motion-card ${isActive && p.href ? 'project--link' : ''}`}
+                        style={{ '--delay': `${i * 70}ms` }}
+                        glowColor="140, 192, 221"
+                        glowRadius={220}
+                      >
+                        <div className="project__media motion-media motion-parallax" style={{ background: p.accent }}>
+                          <img
+                            src={p.cover || `/work-${p.id}.jpg`}
+                            alt={p.title}
+                            loading="lazy"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none'
+                            }}
+                          />
+                          <span className="project__metric">{p.metric}</span>
+                          {p.href ? <span className="project__platform-badge" data-platform={p.platform || 'bilibili'}>{p.platform || 'Bilibili'}</span> : null}
+                          {p.video ? (
+                            <span className="project__platform-badge project__platform-badge--play">
+                              <span className="project__play-icon" aria-hidden="true">▶</span> 微电影
+                            </span>
+                          ) : null}
+                          <span className="project__index">0{i + 1}</span>
+                        </div>
+
+                        <div className="project__body">
+                          <div className="project__role">{p.role}</div>
+                          <h3 className="project__title">{p.title}</h3>
+                          <p className="project__desc">{p.desc}</p>
+                          <div className="project__foot">
+                            <div className="project__tags">
+                              {p.tags.map((t) => (
+                                <GlowCard
+                                  key={t}
+                                  as="span"
+                                  className="project__tag"
+                                  glowColor="140, 192, 221"
+                                  glowRadius={120}
+                                >
+                                  {t}
+                                </GlowCard>
+                              ))}
+                            </div>
+                            <div className="project__meta-group">
+                              {p.href ? (
+                                <span className="project__view-link">
+                                  前往观看 <Icon name="arrow" size={14} />
+                                </span>
+                              ) : null}
+                              {p.video ? (
+                                <span className="project__view-link project__view-link--play">
+                                  观看正片 <span aria-hidden="true">▶</span>
+                                </span>
+                              ) : null}
+                              {p.gallery ? (
+                                <span className="project__view-link project__view-link--gallery">
+                                  查看摄影作品 <Icon name="arrow" size={14} />
+                                </span>
+                              ) : null}
+                              <GlowCard
+                                as="span"
+                                className="project__period project__period-card"
+                                glowColor="140, 192, 221"
+                                glowRadius={120}
+                              >
+                                {p.period}
+                              </GlowCard>
+                            </div>
+                          </div>
+                        </div>
+
+                        <span className="project__cta" aria-hidden="true">
+                          <Icon name="arrow" size={18} />
+                        </span>
+                      </GlowCard>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+
+            {total > 1 && (
+              <div className="projects__dots" aria-label="选择作品">
+                {filteredProjects.map((p, i) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    className={`projects__dot ${i === activeIndex ? 'is-active' : ''}`}
+                    aria-label={`切换到作品：${p.title}`}
+                    aria-current={i === activeIndex ? 'true' : undefined}
+                    onClick={() => goToProject(i, i < activeIndex ? 'prev' : 'next')}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -9,10 +9,25 @@ export default function Navbar() {
   const [active, setActive] = useState('hero')
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    let rafId
+    let last = false
+    const onScroll = () => {
+      if (rafId) return
+      rafId = requestAnimationFrame(() => {
+        rafId = null
+        const now = window.scrollY > 40
+        if (now !== last) {
+          last = now
+          setScrolled(now)
+        }
+      })
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(rafId)
+    }
   }, [])
 
   const dockItems = useMemo(

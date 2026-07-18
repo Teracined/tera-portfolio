@@ -37,9 +37,12 @@ export const stats = [
   { value: '10', suffix: '人', label: '剧组统筹规模' },
 ]
 
+export const categories = ['AI创作', '剪辑创作', '内容创作', '摄影创作']
+
 export const projects = [
   {
     id: 'anime',
+    category: 'AI创作',
     title: 'AI 动漫二创爆款',
     role: '独立主创 · 脚本 / 分镜 / AI 视觉',
     period: '哔哩哔哩 · 抖音',
@@ -50,7 +53,36 @@ export const projects = [
     href: 'https://www.bilibili.com/video/BV1yaFXz3EDK',
   },
   {
+    id: 'kobe-story',
+    category: 'AI创作',
+    title: 'AI作品《神户·布羅渡の物語》',
+    role: '独立主创 · 分镜脚本 / AI 视频生成',
+    period: '2026 · Seedance 2.0 实验性创作',
+    metric: '全 AI 工作流影像实验',
+    desc: '运用前沿 AI 视频生成模型 Seedance 2.0，独立完成从分镜脚本到视觉呈现的全流程创作。通过精准的提示词工程与镜头语言设计，将叙事构思转化为连贯的 AI 动态影像，突破传统实拍局限，探索 AI 视觉叙事的边界与可能性。',
+    tags: ['Seedance 2.0', 'AI 视频生成', '分镜脚本', '提示词工程'],
+    accent: 'linear-gradient(135deg,#06b6d4,#8b5cf6)',
+    cover: '/work-kobe-story.jpg',
+    href: 'https://www.bilibili.com/video/BV1ooZgBTEpW',
+    platform: 'bilibili',
+  },
+  {
+    id: 'gu-zhen-ren',
+    category: 'AI创作',
+    title: 'AI《蛊真人》动画生成',
+    role: '独立主创 · AI 视频生成 / 提示词工程',
+    period: '2026 · Seedance 2.0 经典复刻',
+    metric: 'AI 文学视觉化实验',
+    desc: '以 Seedance 2.0 复刻小说《蛊真人》经典情节，将文字中恢弘的蛊修世界转化为 AI 生成的动态影像。精准把控角色气质与战斗场面的镜头语言，在保留原著叙事张力的同时，赋予经典场景全新的视觉生命力。',
+    tags: ['Seedance 2.0', 'AI 视频生成', '文学视觉化', '《蛊真人》'],
+    accent: 'linear-gradient(135deg,#10b981,#06b6d4)',
+    cover: '/work-gu-zhen-ren.jpg',
+    href: 'https://www.bilibili.com/video/BV1NRZEBrE4y',
+    platform: 'bilibili',
+  },
+  {
     id: 'meme',
+    category: '剪辑创作',
     title: '影视热梗跨界二创',
     role: '独立主创 · 创意混剪 / 特效包装',
     period: '哔哩哔哩',
@@ -62,6 +94,7 @@ export const projects = [
   },
   {
     id: 'ad',
+    category: '内容创作',
     title: '《我"钙"有 D 健康》',
     role: '分镜设计 · 摄影',
     period: '2025.11 – 2025.12 · 汉维药业',
@@ -75,6 +108,7 @@ export const projects = [
   },
   {
     id: 'wquwuji',
+    category: '内容创作',
     title: '剧情片《无去，无趣》摄制项目',
     role: '灯光师',
     period: '2025.09 – 2025.10',
@@ -88,6 +122,7 @@ export const projects = [
   },
   {
     id: 'film',
+    category: '内容创作',
     title: '《流年有迹》微电影',
     role: '编剧 · 副导演',
     period: '2025.11 – 2025.12 · 15 分钟剧情短片',
@@ -101,6 +136,7 @@ export const projects = [
   },
   {
     id: 'carve',
+    category: 'AI创作',
     title: '《刻刀》',
     role: '导演 · 后期剪辑',
     period: '2025 – 2026 · NCDA 参赛',
@@ -114,6 +150,7 @@ export const projects = [
   },
   {
     id: 'shoot-edit',
+    category: '摄影创作',
     title: '摄剪一体化能力',
     role: '摄影 · 剪辑思维前置',
     period: '广播电视学 · 视听语言',

@@ -60,11 +60,17 @@ const DotField = memo(({
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     let resizeTimer
     let visible = true
+    let speedInterval = null
 
-    /* 只在可见时渲染 —— 避免离屏 Canvas 持续消耗 CPU */
     const io = new IntersectionObserver(
       (entries) => {
         visible = entries[0].isIntersecting
+        if (visible) {
+          if (!speedInterval) speedInterval = setInterval(updateMouseSpeed, 20)
+        } else {
+          clearInterval(speedInterval)
+          speedInterval = null
+        }
       },
       { rootMargin: '200px' }
     )
@@ -143,13 +149,12 @@ const DotField = memo(({
       m.prevY = m.y
     }
 
-    const speedInterval = setInterval(updateMouseSpeed, 20)
+    speedInterval = setInterval(updateMouseSpeed, 20)
     let frameCount = 0
 
     function tick() {
       frameCount += 1
 
-      /* 不可见时跳过绘制，节省 CPU */
       if (!visible) {
         rafRef.current = requestAnimationFrame(tick)
         return
@@ -162,7 +167,6 @@ const DotField = memo(({
       const len = dots.length
       const t = frameCount * 0.02
 
-      /* 鼠标不动且无波动效果 → 降频到 1fps */
       if (engagement.current < 0.001 && p.waveAmplitude === 0 && frameCount % 60 !== 0) {
         rafRef.current = requestAnimationFrame(tick)
         return
