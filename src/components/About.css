@@ -264,4 +264,9 @@ a.about__contact:hover,
 }
 @media (max-width: 640px) {
   .about__contacts { grid-template-columns: 1fr; }
+  .about__stats { grid-template-columns: 1fr; }
+  .about__bio { font-size: 15px; }
+  .about__portrait { max-width: 280px; margin-inline: auto; }
+  .about__photo { aspect-ratio: 3 / 4; }
+  .about__stat-num { font-size: 32px; }
 }

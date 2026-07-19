@@ -201,13 +201,43 @@
   .hero__facts {
     grid-template-columns: repeat(2, 1fr);
   }
+  .hero__fact {
+    padding: 16px 14px;
+  }
   .hero__explore {
     grid-column: 1 / -1;
     justify-content: center;
     padding: 18px;
   }
 }
+@media (max-width: 640px) {
+  .hero__center {
+    top: 42%;
+    width: 90%;
+  }
+  .hero__title {
+    font-size: clamp(42px, 16vw, 72px);
+    margin-top: 16px;
+  }
+  .hero__badge {
+    font-size: 12px;
+    padding: 6px 14px;
+  }
+  .hero__lead {
+    font-size: 14px;
+    margin-top: 14px;
+  }
+  .hero__actions {
+    margin-top: 24px;
+    gap: 10px;
+  }
+}
 @media (max-width: 560px) {
   .hero__facts { grid-template-columns: 1fr; }
-  .hero__title { font-size: clamp(64px, 22vw, 96px); }
+  .hero__fact {
+    padding: 14px 16px;
+  }
+  .hero__fact-value { font-size: 15px; }
+  .hero__fact-sub { font-size: 11px; }
+  .hero__explore { padding: 14px 18px; font-size: 14px; }
 }

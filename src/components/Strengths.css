@@ -103,4 +103,7 @@
 }
 @media (max-width: 600px) {
   .strengths__grid { grid-template-columns: 1fr; }
+  .strengths__card { padding: 20px; }
+  .strengths__card-title { font-size: 16px; }
+  .strengths__card-desc { font-size: 14px; }
 }

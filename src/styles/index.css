@@ -229,6 +229,40 @@ h1, h2, h3, h4, p { margin: 0; }
   border: 3px solid var(--bg-soft);
 }
 
+/* ---------- Mobile Baseline ---------- */
+@media (max-width: 640px) {
+  .section {
+    padding-block: clamp(60px, 12vw, 100px);
+  }
+  .section-title {
+    font-size: clamp(28px, 7vw, 40px);
+    margin-top: 12px;
+  }
+  .section-sub {
+    font-size: 15px;
+    max-width: 100%;
+  }
+  .section-display {
+    top: 4px;
+    left: var(--pad);
+    font-size: clamp(40px, 16vw, 72px);
+  }
+  .eyebrow {
+    font-size: 11px;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    width: 20px;
+  }
+  .btn {
+    padding: 12px 22px;
+    font-size: 14px;
+  }
+  .container {
+    padding-inline: clamp(16px, 5vw, 32px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
